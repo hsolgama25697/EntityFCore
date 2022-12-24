@@ -1,0 +1,52 @@
+﻿@model List<EFCore.Models.Student>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Student List";
+}
+@{
+    Pager pager = new Pager();
+    int pageNo = 0;
+
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}
+<h1>Student List</h1>
+
+<div>
+    <input type="search" name="search" placeholder="Search.." id="search" value="@ViewBag.Search" />
+    <button class="btn btn-primary pt-0 mb-1" id="btnSearch" type="submit">Search</button>
+    <a class="btn btn-primary float-end" asp-controller="Student" asp-action="AddStudent">Add Student</a>
+</div>
+
+<div class="student-list">
+    @{
+        await Html.RenderPartialAsync("StudentGrid", Model);
+    }
+</div>
+
+@section Scripts{
+    <script>
+        $('#search').keypress(function (e) {
+
+            if (e.which == 13) {
+                $('#btnSearch').click();
+            }
+        });
+        $("#btnSearch").click(function () {
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "/Student/StudentGrid?search=" + ($("#search").val() == null || $("#search").val() == undefined ? "" : $("#search").val()) + "&page=" + @pager.CurrentPage + "&pagesize=" + @pager.PageSize,
+                dataType: "html",
+                success: function (data) {
+                    $(".student-list").html("");
+                    $(".student-list").html(data);
+                }
+            })
+        })
+    </script>
+
+}

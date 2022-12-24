@@ -1,0 +1,31 @@
+﻿@model EFCore.Models.Student
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Add Student";
+}
+
+<h1>Add Student</h1>
+<form method="post" asp-controller="Student" asp-action="AddStudent" class="mt-5">
+    <input type="hidden" asp-for="Id"/>
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" asp-for="Name">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" asp-for="Email">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Roll Number</label>
+        <input type="number" class="form-control" asp-for="RollNumber">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Class Number</label>
+        <input type="text" class="form-control" asp-for="Class">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Birth Date</label>
+        <input type="date" class="form-control" asp-for="BirthDate">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
